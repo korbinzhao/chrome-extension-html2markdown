@@ -1,0 +1,17 @@
+{
+  "scripts": {
+    "start": "npm run dev",
+    "dev": "webpack serve",
+    "build": "webpack & gulp"
+  },
+  "devDependencies": {
+    "gulp": "^4.0.2",
+    "webpack": "^5.80.0",
+    "webpack-cli": "^5.0.2",
+    "webpack-dev-server": "^4.13.3"
+  },
+  "dependencies": {
+    "file-saver": "^2.0.5",
+    "html-to-md": "^0.8.3"
+  }
+}

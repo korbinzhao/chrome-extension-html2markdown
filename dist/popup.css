@@ -1,0 +1,12 @@
+html,
+body {
+    width: 500px;
+    height: 200px;
+}
+
+.content-button {
+    display: block;
+    padding: 0 10px;
+    white-space: nowrap;
+    cursor: pointer;
+}

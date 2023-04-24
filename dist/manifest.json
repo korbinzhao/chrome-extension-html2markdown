@@ -1,0 +1,19 @@
+{
+    "name": "html2markdown",
+    "version": "1.0",
+    "manifest_version": 3,
+    "action": {
+        "default_popup": "popup.html",
+        "default_icon": "./icons/markdown.png"
+    },
+    "content_scripts": [
+        {
+            "js": [
+                "content-script.js"
+            ],
+            "matches": [
+                "https://juejin.cn/*"
+            ]
+        }
+    ]
+}
