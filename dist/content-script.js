@@ -162,13 +162,12 @@ async function batchConvert({
 
   for await (const [index, tab] of Object.entries(tabs)) {
     tab.click();
+    await sleep(2000);
     const title = tab.querySelector(tabTitleClassName)?.innerHTML;
     const titleWithOrder = `${1 * index + 1}.${title}.md`;
     const markdownText = getMarkdown(contentClassName);
     console.log("--- titleWithOrder ---", titleWithOrder);
     downloadFile(titleWithOrder, markdownText);
-
-    await sleep(1000);
   }
 }
 
