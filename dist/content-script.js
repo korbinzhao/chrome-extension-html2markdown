@@ -120,8 +120,6 @@ var __webpack_exports__ = {};
 /*!*******************************!*\
   !*** ./src/content-script.js ***!
   \*******************************/
-console.log("this is content-script.js");
-
 const html2md = __webpack_require__(/*! html-to-md */ "./node_modules/html-to-md/dist/index.js");
 const { saveAs } = __webpack_require__(/*! file-saver */ "./node_modules/file-saver/dist/FileSaver.min.js");
 const { sleep } = __webpack_require__(/*! ./utils/index */ "./src/utils/index.js");
@@ -171,8 +169,19 @@ async function batchConvert({
   }
 }
 
+function currentPageConvert(contentQueryKey) {
+
+  console.log('currentPageConvert');
+
+  const markdownText = getMarkdown(contentQueryKey);
+  const title = document.querySelector("title")
+    ? document.querySelector("title").innerHTML
+    : "download_article";
+
+  downloadFile(`${title}.md`, markdownText);
+}
+
 function onLoad() {
-  console.log("onLoad");
   chrome.runtime.onMessage.addListener(function (
     request,
     sender,
@@ -180,11 +189,19 @@ function onLoad() {
   ) {
     console.log("doConvert", request);
 
-    const { actionType, tabClassName, tabTitleClassName, contentClassName } =
-      request;
+    const {
+      actionType,
+      tabClassName,
+      tabTitleClassName,
+      contentClassName,
+      contentQueryKey,
+    } = request;
 
-    if (actionType === "convert_action") {
+    if (actionType === "batch_convert_action") {
       batchConvert({ tabClassName, tabTitleClassName, contentClassName });
+      sendResponse("received");
+    } else if (actionType === "current_page_convert_action") {
+      currentPageConvert(contentQueryKey);
       sendResponse("received");
     }
 

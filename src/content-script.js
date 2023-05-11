@@ -1,5 +1,3 @@
-console.log("this is content-script.js");
-
 const html2md = require("html-to-md");
 const { saveAs } = require("file-saver");
 const { sleep } = require("./utils/index");
@@ -49,8 +47,19 @@ async function batchConvert({
   }
 }
 
+function currentPageConvert(contentQueryKey) {
+
+  console.log('currentPageConvert');
+
+  const markdownText = getMarkdown(contentQueryKey);
+  const title = document.querySelector("title")
+    ? document.querySelector("title").innerHTML
+    : "download_article";
+
+  downloadFile(`${title}.md`, markdownText);
+}
+
 function onLoad() {
-  console.log("onLoad");
   chrome.runtime.onMessage.addListener(function (
     request,
     sender,
@@ -58,11 +67,19 @@ function onLoad() {
   ) {
     console.log("doConvert", request);
 
-    const { actionType, tabClassName, tabTitleClassName, contentClassName } =
-      request;
+    const {
+      actionType,
+      tabClassName,
+      tabTitleClassName,
+      contentClassName,
+      contentQueryKey,
+    } = request;
 
-    if (actionType === "convert_action") {
+    if (actionType === "batch_convert_action") {
       batchConvert({ tabClassName, tabTitleClassName, contentClassName });
+      sendResponse("received");
+    } else if (actionType === "current_page_convert_action") {
+      currentPageConvert(contentQueryKey);
       sendResponse("received");
     }
 

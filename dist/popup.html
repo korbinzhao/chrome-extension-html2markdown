@@ -10,16 +10,24 @@
 </head>
 
 <body>
-    <p>tab class:
+    <p>tab:
         <input id="tabClassName" type="text" value=".section">
     </p>
-    <p>tab title class:
+    <p>tab title:
         <input id="tabTitleClassName" type="text" value=".title-text">
     </p>
-    <p>markdown content class:
+    <p>markdown content:
         <input id="markdownContentClassName" type="text" value=".markdown-body">
     </p>
-    <button id="convert" class="content-button">Batch Download</button>
+    <button id="batch-convert" class="content-button">Batch Download</button>
+
+    <hr/>
+
+    <p>markdown content:
+        <input id="currentPageMarkdownCountentQueryKey" type="text" value="article">
+    </p>
+
+    <button id="current-page-covert">Download Current Page</button>
 
     <script src="./popup.js"></script>
 </body>
